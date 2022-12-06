@@ -55,3 +55,35 @@ SELECT *
 FROM `teachers`
 WHERE `phone` is NULL;
  ```
+
+Group by:
+ - Contare quanti iscritti ci sono stati ogni anno
+ ```sql
+SELECT YEAR(`students`.`enrolment_date`) AS `year`, COUNT(*) AS `students_number`
+FROM `students`
+GROUP BY YEAR(`enrolment_date`);
+ ```
+ 
+ - Contare gli insegnanti che hanno l'ufficio nello stesso edificio
+ ```sql
+SELECT `teachers`.`office_address`, COUNT(*) AS `teachers_number`
+FROM `teachers`
+GROUP BY `office_address`;
+ ```
+ 
+ - Calcolare la media dei voti di ogni appello d'esame
+ ```sql
+SELECT `exam_student`.`exam_id`, `courses`.`name`, AVG(`exam_student`.`vote`) AS `average_vote`
+FROM `exam_student`
+JOIN `exams` ON `exams`.`id` = `exam_student`.`exam_id`
+JOIN `courses` ON `courses`.`id` = `exams`.`course_id`
+GROUP BY `exam_student`.`exam_id`;
+ ```
+ 
+ - Contare quanti corsi di laurea ci sono per ogni dipartimento
+ ```sql
+SELECT `departments`.`name`, COUNT(`degrees`.`id`) AS `degrees_number`
+FROM `degrees`
+JOIN `departments` ON `departments`.`id` = `degrees`.`department_id`
+GROUP BY `departments`.`name`;
+ ```
